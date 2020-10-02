@@ -15,9 +15,11 @@ public class JdbcSqliteRunner {
 
         createTableIfNotExist();
 
-        /*LiteLog.log("This is not an alert");
+        /*
+        LiteLog.log("This is not an alert");
         LiteLog.log("Warning", LiteLog.Level.WARNING);
-        LiteLog.log("Error!", LiteLog.Level.ERROR);*/
+        LiteLog.log("Error!", LiteLog.Level.ERROR);
+        */
 
         Scanner stdin = new Scanner(System.in);
         System.out.println("Enter text into the log. (EOF to end)\r\n");
@@ -61,7 +63,8 @@ public class JdbcSqliteRunner {
                             "(id INTEGER PRIMARY KEY," +
                             "message TEXT," +
                             "posted INTEGER," +
-                            "message_level INTEGER)");
+                            "message_level INTEGER)"
+            );
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
