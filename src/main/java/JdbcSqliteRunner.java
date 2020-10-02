@@ -8,8 +8,6 @@ import java.util.Scanner;
 
 public class JdbcSqliteRunner {
 
-    // Create EL Diagram
-
     public static void main(String[] args) throws ClassNotFoundException {
 
         // Ensure we have the sqlite driver. Maven should handle it, otherwise this will throw ClassNotFound
@@ -17,9 +15,11 @@ public class JdbcSqliteRunner {
 
         createTableIfNotExist();
 
-        /*LiteLog.log("This is not an alert");
+        /*
+        LiteLog.log("This is not an alert");
         LiteLog.log("Warning", LiteLog.Level.WARNING);
-        LiteLog.log("Error!", LiteLog.Level.ERROR);*/
+        LiteLog.log("Error!", LiteLog.Level.ERROR);
+        */
 
         Scanner stdin = new Scanner(System.in);
         System.out.println("Enter text into the log. (EOF to end)\r\n");
@@ -52,7 +52,7 @@ public class JdbcSqliteRunner {
      */
     private static void createTableIfNotExist(final boolean reset) {
         // initiate connection. This fails if the sqlite driver is not found!
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:log.db")) {
+        try (Connection conn = DriverManager.getConnection(LiteLog.DB_CONNECTION_URL)) {
 
             Statement statement = conn.createStatement();
 
@@ -63,7 +63,8 @@ public class JdbcSqliteRunner {
                             "(id INTEGER PRIMARY KEY," +
                             "message TEXT," +
                             "posted INTEGER," +
-                            "message_level INTEGER)");
+                            "message_level INTEGER)"
+            );
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
