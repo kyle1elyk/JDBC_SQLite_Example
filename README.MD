@@ -21,3 +21,14 @@ Built for **CSE5260: Database Systems, Fall 2020**
     SELECT * FROM log ORDER BY id DESC LIMIT 1
 
 
+---
+
+##### Usage
+
+*(Prebuilt jar available under action artifacts)*
+
+###### Build
+    mvn -B clean package
+###### Run
+    java -jar target/JDBC_SQLite-1.0-SNAPSHOT-jar-with-dependencies.jar
+
