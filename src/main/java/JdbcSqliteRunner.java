@@ -1,3 +1,8 @@
+import org.apache.commons.configuration2.Configuration;
+import org.apache.commons.configuration2.builder.fluent.Configurations;
+import org.apache.commons.configuration2.ex.ConfigurationException;
+
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,6 +19,18 @@ public class JdbcSqliteRunner {
 
         // Ensure we have the sqlite driver. Maven should handle it, otherwise this will throw ClassNotFound
         Class.forName("org.sqlite.JDBC");
+
+        Configurations configs = new Configurations();
+
+        try {
+            Configuration config = configs.properties(new File("config.properties"));
+
+            LiteLog.DB_CONNECTION_URL = config.getString("database.url", "jdbc:sqlite:log.db");
+
+        }  catch (ConfigurationException ce) {
+            System.err.println("Could not load configs");
+            System.exit(1);
+        }
 
         createTableIfNotExist();
 
@@ -52,7 +69,7 @@ public class JdbcSqliteRunner {
      */
     private static void createTableIfNotExist(final boolean reset) {
         // initiate connection. This fails if the sqlite driver is not found!
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:log.db")) {
+        try (Connection conn = DriverManager.getConnection(LiteLog.DB_CONNECTION_URL)) {
 
             Statement statement = conn.createStatement();
 

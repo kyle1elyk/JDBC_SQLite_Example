@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 public class LiteLog {
 
+    protected static String DB_CONNECTION_URL;
+
     public enum Level {
         /** Low priority */
         INFO,
@@ -76,7 +78,7 @@ public class LiteLog {
      */
     public static boolean log(final String message, final Level level) {
 
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:log.db")) {
+        try (Connection conn = DriverManager.getConnection(DB_CONNECTION_URL)) {
 
             Instant now = Instant.now();
             long epoch = now.getEpochSecond();
@@ -105,7 +107,7 @@ public class LiteLog {
      * @return An array containing each message element from the db
      */
     public static Message[] getMessages() {
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:log.db")) {
+        try (Connection conn = DriverManager.getConnection(DB_CONNECTION_URL)) {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(
                     "SELECT * FROM log"
@@ -137,7 +139,7 @@ public class LiteLog {
      */
     public static Message getLastMessage() {
 
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:log.db")) {
+        try (Connection conn = DriverManager.getConnection(DB_CONNECTION_URL)) {
             Statement selectAll = conn.createStatement();
             ResultSet rs = selectAll.executeQuery(
                     "SELECT * FROM log ORDER BY id DESC LIMIT 1"
