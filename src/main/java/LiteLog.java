@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class LiteLog {
 
-    protected static String DB_CONNECTION_URL;
+    protected static final String DB_CONNECTION_URL = "jdbc:sqlite:log.db";
 
     public enum Level {
         /** Low priority */

@@ -1,8 +1,3 @@
-import org.apache.commons.configuration2.Configuration;
-import org.apache.commons.configuration2.builder.fluent.Configurations;
-import org.apache.commons.configuration2.ex.ConfigurationException;
-
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,24 +8,10 @@ import java.util.Scanner;
 
 public class JdbcSqliteRunner {
 
-    // Create EL Diagram
-
     public static void main(String[] args) throws ClassNotFoundException {
 
         // Ensure we have the sqlite driver. Maven should handle it, otherwise this will throw ClassNotFound
         Class.forName("org.sqlite.JDBC");
-
-        Configurations configs = new Configurations();
-
-        try {
-            Configuration config = configs.properties(new File("config.properties"));
-
-            LiteLog.DB_CONNECTION_URL = config.getString("database.url", "jdbc:sqlite:log.db");
-
-        }  catch (ConfigurationException ce) {
-            System.err.println("Could not load configs");
-            System.exit(1);
-        }
 
         createTableIfNotExist();
 
