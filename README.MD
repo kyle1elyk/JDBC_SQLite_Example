@@ -4,7 +4,7 @@ Built for **CSE5260: Database Systems, Fall 2020**
 
 ### SQL statements
 
-    -- auto-generated definition  
+###### [JdbcSqliteRunner.java](src/main/java/JdbcSqliteRunner.java):62 
     create table log  
     (  
         id            INTEGER primary key,  
@@ -13,12 +13,11 @@ Built for **CSE5260: Database Systems, Fall 2020**
         message_level INTEGER  
     );
 
-<!-- break -->
-
+###### [LiteLog.java](src/main/java/LiteLog.java):86 
     INSERT INTO log(message, posted, message_level) VALUES (?, ?, ?)
 
-<!-- break -->
-
+###### [LiteLog.java](src/main/java/LiteLog.java):143
     SELECT * FROM log ORDER BY id DESC LIMIT 1
+###### [LiteLog.java](src/main/java/LiteLog.java):111
     SELECT * FROM log 
 
