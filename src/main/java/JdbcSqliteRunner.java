@@ -21,8 +21,11 @@ public class JdbcSqliteRunner {
         LiteLog.log("Error!", LiteLog.Level.ERROR);
         */
 
+        // Prints all the messages from the log
+        Arrays.stream(LiteLog.getMessages()).forEach(System.out::println);
+
         Scanner stdin = new Scanner(System.in);
-        System.out.println("Enter text into the log. (EOF to end)\r\n");
+        System.out.println("\r\nEnter text into the log. (EOF to end)");
         System.out.print("Log > ");
         while (stdin.hasNextLine()) {
             LiteLog.log(stdin.nextLine());
@@ -35,8 +38,6 @@ public class JdbcSqliteRunner {
         stdin.close();
         System.out.println();
 
-        // Prints all the messages from the log
-        Arrays.stream(LiteLog.getMessages()).forEach(System.out::println);
     }
 
     /**
