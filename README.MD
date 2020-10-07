@@ -13,11 +13,11 @@ Built for **CSE5260: Database Systems, Fall 2020**
         message_level INTEGER  
     );
 
-###### [LiteLog.java](src/main/java/LiteLog.java):88 
+###### [LiteLog.java](src/main/java/LiteLog.java):98 
     INSERT INTO log(message, posted, message_level) VALUES (?, ?, ?)
-###### [LiteLog.java](src/main/java/LiteLog.java):113
+###### [LiteLog.java](src/main/java/LiteLog.java):124
     SELECT * FROM log 
-###### [LiteLog.java](src/main/java/LiteLog.java):145
+###### [LiteLog.java](src/main/java/LiteLog.java):158
     SELECT * FROM log ORDER BY id DESC LIMIT 1
 
 

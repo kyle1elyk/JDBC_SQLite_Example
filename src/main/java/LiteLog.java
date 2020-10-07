@@ -1,4 +1,5 @@
 import java.sql.*;
+
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -7,6 +8,15 @@ import java.util.ArrayList;
 
 public class LiteLog {
 
+    /*
+        Protocol:          jdbc
+        Database type:     sqlite
+        Database location: log.db
+
+        variations:
+        jdbc:mysql:serverx.com
+        jdbc:oracle:serverz.com
+    */
     protected static final String DB_CONNECTION_URL = "jdbc:sqlite:log.db";
 
     public enum Level {
@@ -42,11 +52,11 @@ public class LiteLog {
         final Instant posted;
         final Level level;
 
-        private Message (long id, String message, long posted, Level level) {
+        private Message (long id, String message, long posted, int level) {
             this.id = id;
             this.message = message;
             this.posted = Instant.ofEpochSecond(posted);
-            this.level = level;
+            this.level = Level.get(level);
         }
 
         /**
@@ -108,6 +118,7 @@ public class LiteLog {
      */
     public static Message[] getMessages() {
         try (Connection conn = DriverManager.getConnection(DB_CONNECTION_URL)) {
+
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(
                     "SELECT * FROM log"
@@ -116,11 +127,13 @@ public class LiteLog {
             ArrayList<Message> messages = new ArrayList<>();
 
             while (rs.next()) {
-                messages.add(new Message(
+                Message m = new Message(
                         rs.getLong("id"),
                         rs.getString("message"),
                         rs.getLong("posted"),
-                        Level.get(rs.getInt("message_level"))));
+                        rs.getInt("message_level"));
+
+                messages.add(m);
             }
             rs.close();
 
@@ -152,7 +165,7 @@ public class LiteLog {
                         rs.getLong("id"),
                         rs.getString("message"),
                         rs.getLong("posted"),
-                        Level.get(rs.getInt("message_level")));
+                        rs.getInt("message_level"));
             }
             rs.close();
 
